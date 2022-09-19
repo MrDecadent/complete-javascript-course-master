@@ -193,6 +193,7 @@ if(markHigherBMI){
 }
 */
 
+/*
 //类型转换
 const inputYear = '1999';
 console.log(Number(inputYear) + 18);
@@ -203,4 +204,57 @@ console.log('I am ' + 23 + 'years old');//23被转换成了String
 //减号让字符串强转成数字 加号让数字强转成字符串
 console.log('23' - '10' - 3);
 console.log('23' + '10' + 3);
+*/
+
+//0, '', undefined, null, NaN 这五个值被转成布尔值时为false
+
+/*
+console.log(Boolean(0));//false
+console.log(Boolean(undefined));//false
+console.log(Boolean(''));//空值 false
+console.log(Boolean('MrD'));//true
+console.log(Boolean({}));//空对象 true
+
+const money = 0;
+if(money){//括号中内容会隐式转换为布尔值
+    console.log("Don't spend it all");
+}else{
+    console.log("You should get a job!");
+}
+
+let height;
+if(height){//如果没有给height赋值 为undefined 会被转换成false
+    console.log('Year height is defined');
+}else{//但如果给height赋值为0 强制转换一样会把它转换成false
+    console.log('Height is UNDEFINED');
+}
+*/
+
+/*
+//===严格比较运算符，不会进行类型转换   尽量使用
+//==松散比较运算符，会进行类型转换
+const age = '18';
+if(age === 18){
+    console.log('You just became an adult :D (严格)');
+}
+
+if(age == 18){
+    console.log('You just became an adult :D (松散)');
+}
+
+const favourite = Number(prompt("What's your favourite number?"));
+console.log(typeof favourite,favourite);
+
+if(favourite === 114514){
+    console.log('你是一个很臭的人');
+} else if(favourite === 1919){
+    console.log('你同样是一个很臭的人');
+} else{
+    console.log('不是114也不是1919');
+}
+
+if(favourite !== 23){
+    console.log('你输入的数字不是23');
+}
+*/
 
