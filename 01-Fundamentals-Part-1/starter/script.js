@@ -402,7 +402,8 @@ HINT: Value X is between 50 and 300, if it's >= 50 && <= 300 😉
 GOOD LUCK 😀
 */
 
+/*
 const bill = 430;
 bill >= 50 && bill <= 300 ? console.log(`The bill was ${bill}, the tip was ${bill*0.15}, and the total value ${bill*1.15}`) 
 : console.log(`The bill was ${bill}, the tip was ${bill*0.2}, and the total value ${bill*1.2}`);
-//test
+*/
