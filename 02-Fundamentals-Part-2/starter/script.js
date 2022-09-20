@@ -15,3 +15,41 @@ if(hasDriversLicense) console.log('I can drive :D');
 // const interface = 'Audio';
 const private = 534;
 */
+
+/*
+function logger() {
+    console.log('My name is MrD');
+}
+
+//调用函数
+logger();
+logger();
+
+function fruitProcessor(apples,oranges){
+    const juice = `Juice with ${apples} apples and ${oranges} oranges`;
+    return juice;
+}
+
+const appleJuice = fruitProcessor(5,0);
+
+console.log(appleJuice);
+
+const appleOrangeJuice = fruitProcessor(2,3);
+
+console.log(appleOrangeJuice);
+*/
+
+function calcaAge1(birthYear){
+    return 2077 - birthYear;
+}
+
+const age1 = calcaAge1(1999);//可以在函数定义前调用
+console.log(age1);
+
+//匿名函数
+const calcAge2 = function (birthYear){
+    return 2077 - birthYear;
+}
+
+const age2 = calcAge2(1998);//不可以在函数定义前调用
+console.log(age2);
