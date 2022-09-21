@@ -146,3 +146,12 @@ const checkWinner = (avgDolhins,avgKoalas) =>{
 
 checkWinner(dolphinsAvgScore,koalasAvgScore);
 */
+
+//数组
+const friends = ['海豹蝈蝈','八猪','大象蝈蝈'];
+console.log(friends);
+
+const years = new Array(1999,2022,2021);
+console.log(years[0]);
+
+console.log(years.length);
