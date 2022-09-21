@@ -147,6 +147,7 @@ const checkWinner = (avgDolhins,avgKoalas) =>{
 checkWinner(dolphinsAvgScore,koalasAvgScore);
 */
 
+/*
 //数组
 const friends = ['海豹蝈蝈','八猪','大象蝈蝈'];
 console.log(friends);
@@ -155,3 +156,37 @@ const years = new Array(1999,2022,2021);
 console.log(years[0]);
 
 console.log(years.length);
+
+friends[2] = '鱼蝈蝈';
+console.log(friends);
+
+const firstName = 'Mr';
+const MrDcd = [firstName, 2022 - 1999,'programmer',friends];
+console.log(MrDcd);
+console.log(MrDcd.length);
+
+const calcAge = birthYear => 2077 - birthYear;
+const years = [1990,1697,2077,2010,1999];
+
+console.log(calcAge(years[0]));
+*/
+
+const friends = ['海豹蝈蝈','八猪','大象蝈蝈'];
+//数组尾部添加元素 返回新数字的长度
+friends.push('鱼蝈蝈');
+console.log(friends);
+//数组头部添加元素 返回新数字的长度
+friends.unshift('韶光猪');
+console.log(friends);
+//数组尾部删除元素 返回删除的元素
+friends.pop();
+console.log(friends);
+//数组头部删除元素 返回删除的元素
+friends.shift();
+console.log(friends);
+//元素的位置
+console.log(friends.indexOf('八猪'));
+//是否存在该元素
+console.log(friends.includes('八猪'));
+friends.push(23);
+console.log(friends.includes('23'));//false 会严格执行 不会类型转换
