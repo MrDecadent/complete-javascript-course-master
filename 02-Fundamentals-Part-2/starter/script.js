@@ -39,6 +39,7 @@ const appleOrangeJuice = fruitProcessor(2,3);
 console.log(appleOrangeJuice);
 */
 
+/*
 function calcaAge1(birthYear){
     return 2077 - birthYear;
 }
@@ -53,3 +54,19 @@ const calcAge2 = function (birthYear){
 
 const age2 = calcAge2(1998);//不可以在函数定义前调用
 console.log(age2);
+*/
+
+//箭头函数
+const calcAge3 = birthYear => 2077 - birthYear;
+
+const age3 = calcAge3(1999);
+console.log(age3);
+
+const yearsUnitRetirement = (birthYear,firstName) => {
+    const age = 2022 - birthYear;
+    const retirement = 65 -age;
+    // return retirement;
+    return `${firstName} retires in ${retirement}`;
+}
+
+console.log(yearsUnitRetirement(1999,'MrD'));
