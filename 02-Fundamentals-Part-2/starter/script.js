@@ -256,7 +256,7 @@ const Mr = {
 };
 */
 
-
+/*
 const Mr = {
     firstName : 'li',
     lastName : 'HaoXuan',
@@ -290,3 +290,38 @@ Mr.location = 'GZ';
 // "Jonas has 3 friends, and his best friend is called Michael"
 
 console.log(`MrDecadent has ${Mr.friends.length} friends, and his best friend is called ${Mr.friends[2]}`);
+*/
+
+const jonas = {
+    firstName: 'Jonas',
+    lastName: 'Schmedtmann',
+    birthYear: 1991,
+    job: 'teacher',
+    friends: ['Michael', 'Peter', 'Steven'],
+    hasDriversLicense: true,
+    // calAge: birthYear => 2037 - birthYear
+    
+    // calAge: function() {
+    //     return 2037 - this.birthYear;
+    // }
+    
+    calAge: function() {
+        this.age = 2037 - this.birthYear;
+        return this.age;
+    },
+
+    getSummary: function(){
+        return `${this.firstName} is a ${this.age}-year old ${this.job}, and he has ${this.hasDriversLicense? 'a' : 'no'} driver's license`;
+    }
+  };
+
+  console.log(jonas['calAge']());
+  console.log(jonas.age);
+  console.log(jonas.age);
+  console.log(jonas.age);
+
+// Challenge
+// "Jonas is a 46-year old teacher, and he has a driver's license"
+console.log(jonas.getSummary());
+
+
