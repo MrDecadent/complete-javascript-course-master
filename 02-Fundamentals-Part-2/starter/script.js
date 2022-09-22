@@ -371,3 +371,11 @@ if(john.calcBMI() > mark.calcBMI()){
     console.log(`${mark.fullName}'s BMI (${mark.bmi}) is higher than ${john.fullName}'s (${john.bmi})!`);
 }
 */
+
+//循环
+
+// console.log('Lifting weights repetition 1 🏋️‍');
+
+for(let rep = 1;rep <= 10 ; rep++){
+    console.log(`Lifting weights repetition ${rep} 🏋️‍`);
+}
