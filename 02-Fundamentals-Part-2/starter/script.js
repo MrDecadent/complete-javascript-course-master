@@ -214,6 +214,7 @@ HINT: Remember that an array needs a value in each position, and that value can 
 GOOD LUCK 😀
 */
 
+/*
 const calcTip = billValue => {
     if(billValue >= 50 && billValue <= 300){
         return billValue * 1.15;
@@ -233,4 +234,59 @@ console.log(calcTip(bill[2]));
 
 const total = [calcTip(bill[0]),calcTip(bill[1]),calcTip(bill[2])];
 console.log(total);
+*/
 
+/*
+//数组
+const MrDecadent = [
+    'Mr',
+    'D',
+    2022-1999,
+    'Programmer',
+    ['海豹蝈蝈','八猪','大象蝈蝈']
+];
+
+//对象
+const Mr = {
+    firstNmae : 'li',
+    lastName : 'HaoXuan',
+    age : 2022 - 1999,
+    job : 'Programmer',
+    friends : ['海豹蝈蝈','八猪','大象蝈蝈']
+};
+*/
+
+
+const Mr = {
+    firstName : 'li',
+    lastName : 'HaoXuan',
+    age : 2022 - 1999,
+    job : 'Programmer',
+    friends : ['海豹蝈蝈','八猪','大象蝈蝈']
+};
+
+console.log(Mr);
+
+console.log(Mr.lastName);
+
+const nameKey = 'Name';
+console.log(Mr['first' + nameKey]);
+console.log(Mr['last' + nameKey]);
+
+const interestedIn = prompt('What do you want to know about Mr?');
+console.log(Mr.interestedIn);//undefiend
+console.log(Mr[interestedIn]);
+
+if(Mr[interestedIn]){//如果不存在 undefined会被隐式转换成false
+    console.log(Mr[interestedIn]);
+}else{
+    console.log('Wrong request! What do you want to know about Mr?')
+}
+
+Mr.location = 'GZ';
+
+
+// Challenge
+// "Jonas has 3 friends, and his best friend is called Michael"
+
+console.log(`MrDecadent has ${Mr.friends.length} friends, and his best friend is called ${Mr.friends[2]}`);
