@@ -376,6 +376,49 @@ if(john.calcBMI() > mark.calcBMI()){
 
 // console.log('Lifting weights repetition 1 🏋️‍');
 
+/*
 for(let rep = 1;rep <= 10 ; rep++){
     console.log(`Lifting weights repetition ${rep} 🏋️‍`);
+}
+*/
+
+const jonas = [
+    'Jonas',
+    'Schmedtmann',
+    2037 - 1999,
+    'teacher',
+    ['Michael', 'Peter', 'Steven'],
+    true
+];
+
+const types = [];
+
+for(let i = 0; i<jonas.length; i++){
+    console.log(jonas[i]);
+    // types[i] = typeof jonas[i];
+
+    types.push(typeof jonas[i]);
+}
+
+console.log(types);
+
+const years = [1999,2007,1988,2020];
+const ages = [];
+
+for(let i = 0; i<years.length; i++){
+    ages.push(2037 - years[i]); 
+}
+
+console.log(ages);
+
+console.log('--- ONLY STRING ---');
+for(let i = 0; i<jonas.length; i++){
+    if(typeof jonas[i] !== 'string') continue;
+    console.log(jonas[i]);
+}
+
+console.log('--- BREAK WITH NUMBER ---');
+for(let i = 0; i<jonas.length; i++){
+    console.log(jonas[i]);
+    if(typeof jonas[i] === 'number') break;
 }
