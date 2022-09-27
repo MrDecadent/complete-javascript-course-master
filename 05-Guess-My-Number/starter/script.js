@@ -22,6 +22,14 @@ console.log('secretNumber:' + secretNumber);
 let score = document.querySelector('.score').textContent;
 //最高分数
 let highScore = document.querySelector('.highscore').textContent;
+//改变class为'message'的文本内容
+const displayMessage = message => {
+  document.querySelector('.message').textContent = message;
+};
+//改变class为'score'的文本内容
+const displayScore = message => {
+  document.querySelector('.score').textContent = message;
+};
 
 //给check元素中添加了一个点击事件和一个匿名函数
 document.querySelector('.check').addEventListener('click', function () {
@@ -32,11 +40,13 @@ document.querySelector('.check').addEventListener('click', function () {
 
   if (!guess) {
     //没有输入值
-    document.querySelector('.message').textContent = '⛔  No number!';
+    // document.querySelector('.message').textContent = '⛔  No number!';
+    displayMessage('⛔  No number!');
   } else if (score > 0) {
     if (guess === secretNumber) {
       //猜中数字 赢得比赛
-      document.querySelector('.message').textContent = '🎉Correct Number';
+      // document.querySelector('.message').textContent = '🎉Correct Number';
+      displayMessage('🎉Correct Number');
       //显示数字
       document.querySelector('.number').textContent = secretNumber;
       //改变背景颜色
@@ -49,17 +59,19 @@ document.querySelector('.check').addEventListener('click', function () {
       // highScore = document.querySelector('.highscore').textContent;
       highScore = highScore < score ? score : highScore;
       document.querySelector('.highscore').textContent = highScore;
-    } else if (guess > secretNumber) {
-      //猜的数字太大
-      document.querySelector('.message').textContent = '📈Too high';
-      document.querySelector('.score').textContent = --score;
-    } else if (guess < secretNumber) {
-      //猜的数字太小
-      document.querySelector('.message').textContent = '📉Too low';
-      document.querySelector('.score').textContent = --score;
+    } else {
+      //猜的数字大或小
+      // document.querySelector('.message').textContent =
+      //   guess > secretNumber ? '📈Too high' : '📉Too low';
+      displayMessage(guess > secretNumber ? '📈Too high' : '📉Too low');
+      // document.querySelector('.score').textContent = --score;
+      displayScore(--score);
     }
   } else {
-    document.querySelector('.message').textContent = '💥 You lost the game!';
+    // document.querySelector('.message').textContent = '💥 You lost the game!';
+    displayMessage('💥 You lost the game!');
+    // document.querySelector('.score').textContent = 0;
+    displayScore(0);
   }
 });
 
@@ -68,7 +80,8 @@ document.querySelector('.again').addEventListener('click', function () {
   //重置输入框
   document.querySelector('.guess').value = '';
   //重置文字
-  document.querySelector('.message').textContent = 'Start guessing...';
+  // document.querySelector('.message').textContent = 'Start guessing...';
+  displayMessage('Start guessing...');
   //重置正确数字显示
   document.querySelector('.number').textContent = '?';
   //重置正确数字
@@ -76,7 +89,8 @@ document.querySelector('.again').addEventListener('click', function () {
   console.log('secretNumber:' + secretNumber);
   //重置分数
   score = 20;
-  document.querySelector('.score').textContent = score;
+  // document.querySelector('.score').textContent = score;
+  displayScore(score);
   //改变背景颜色
   document.querySelector('body').style.backgroundColor = '#222';
   //改变宽度
