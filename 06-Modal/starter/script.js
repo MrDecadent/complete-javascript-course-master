@@ -26,3 +26,14 @@ for (let i = 0; i < btnsShowModal.length; i++) {
 btnCloseModal.addEventListener('click', addHidden);
 
 overlay.addEventListener('click', addHidden);
+
+//键盘事件 => 全局事件
+document.addEventListener('keydown', function (event) {
+  //触发这个事件的时候,会传入一个按键的值,所以通过打印event来判断需要的键的对象
+  // console.log(event);
+  //ESC key : "Escape"
+  if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+    //只有modal的属性没有hidden时才调用函数去隐藏
+    addHidden();
+  }
+});
