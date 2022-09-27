@@ -17,17 +17,18 @@ console.log(document.querySelector('.guess').value);
 */
 
 //设定一个秘密数字
-const secretNumber = Math.trunc(Math.random() * 20) + 1;
-document.querySelector('.number').textContent = secretNumber;
-
+let secretNumber = Math.trunc(Math.random() * 20) + 1;
+console.log('secretNumber:' + secretNumber);
 let score = document.querySelector('.score').textContent;
+//最高分数
+let highScore = document.querySelector('.highscore').textContent;
 
 //给check元素中添加了一个点击事件和一个匿名函数
 document.querySelector('.check').addEventListener('click', function () {
   //前端传过来的内容会变成string 需要转成number
   const guess = Number(document.querySelector('.guess').value);
 
-  console.log(guess);
+  // console.log(guess);
 
   if (!guess) {
     //没有输入值
@@ -36,11 +37,19 @@ document.querySelector('.check').addEventListener('click', function () {
     if (guess === secretNumber) {
       //猜中数字 赢得比赛
       document.querySelector('.message').textContent = '🎉Correct Number';
+      //显示数字
+      document.querySelector('.number').textContent = secretNumber;
       //改变背景颜色
       document.querySelector('body').style.backgroundColor = '#60B347';
-
+      //改变宽度
       document.querySelector('.number').style.width = '30rem';
-    } else if (guess !== secretNumber) {
+      //记录最高分数
+      // document.querySelector('.highscore').textContent =
+      //   highScore < score ? score : highScore;
+      // highScore = document.querySelector('.highscore').textContent;
+      highScore = highScore < score ? score : highScore;
+      document.querySelector('.highscore').textContent = highScore;
+    } else if (guess > secretNumber) {
       //猜的数字太大
       document.querySelector('.message').textContent = '📈Too high';
       document.querySelector('.score').textContent = --score;
@@ -52,4 +61,24 @@ document.querySelector('.check').addEventListener('click', function () {
   } else {
     document.querySelector('.message').textContent = '💥 You lost the game!';
   }
+});
+
+//Again重置
+document.querySelector('.again').addEventListener('click', function () {
+  //重置输入框
+  document.querySelector('.guess').value = '';
+  //重置文字
+  document.querySelector('.message').textContent = 'Start guessing...';
+  //重置正确数字显示
+  document.querySelector('.number').textContent = '?';
+  //重置正确数字
+  secretNumber = Math.trunc(Math.random() * 20) + 1;
+  console.log('secretNumber:' + secretNumber);
+  //重置分数
+  score = 20;
+  document.querySelector('.score').textContent = score;
+  //改变背景颜色
+  document.querySelector('body').style.backgroundColor = '#222';
+  //改变宽度
+  document.querySelector('.number').style.width = '15rem';
 });
