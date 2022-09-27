@@ -34,11 +34,18 @@ document.querySelector('.check').addEventListener('click', function () {
     document.querySelector('.message').textContent = '⛔  No number!';
   } else if (score > 0) {
     if (guess === secretNumber) {
+      //猜中数字 赢得比赛
       document.querySelector('.message').textContent = '🎉Correct Number';
-    } else if (guess > secretNumber) {
+      //改变背景颜色
+      document.querySelector('body').style.backgroundColor = '#60B347';
+
+      document.querySelector('.number').style.width = '30rem';
+    } else if (guess !== secretNumber) {
+      //猜的数字太大
       document.querySelector('.message').textContent = '📈Too high';
       document.querySelector('.score').textContent = --score;
     } else if (guess < secretNumber) {
+      //猜的数字太小
       document.querySelector('.message').textContent = '📉Too low';
       document.querySelector('.score').textContent = --score;
     }
