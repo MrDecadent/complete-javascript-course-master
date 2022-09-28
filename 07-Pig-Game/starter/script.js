@@ -8,6 +8,10 @@ const btnNew = document.querySelector('.btn--new');
 const btnHold = document.querySelector('.btn--hold');
 const current0El = document.getElementById('current--0');
 const current1El = document.getElementById('current--1');
+const player1El = document.querySelector('.player--0');
+const player2El = document.querySelector('.player--1');
+
+console.log(player1El, player2El);
 
 let currentScore = 0;
 
@@ -29,8 +33,21 @@ btnRoll.addEventListener('click', function () {
   if (dice !== 1) {
     //累计分数
     currentScore += dice;
-    current0El.textContent = currentScore;
+    player1El.classList.contains('player--active')
+      ? (current0El.textContent = currentScore)
+      : (current1El.textContent = currentScore);
   } else {
-    //是1 切换玩家
+    //是1 清空当前分数 切换玩家
+    if (player1El.classList.contains('player--active')) {
+      currentScore = 0;
+      current0El.textContent = currentScore;
+      player1El.classList.remove('player--active');
+      player2El.classList.add('player--active');
+    } else {
+      currentScore = 0;
+      current1El.textContent = currentScore;
+      player2El.classList.remove('player--active');
+      player1El.classList.add('player--active');
+    }
   }
 });
