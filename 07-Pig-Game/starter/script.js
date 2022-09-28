@@ -6,22 +6,39 @@ const diceEl = document.querySelector('.dice');
 const btnRoll = document.querySelector('.btn--roll');
 const btnNew = document.querySelector('.btn--new');
 const btnHold = document.querySelector('.btn--hold');
-// const current0El = document.getElementById('current--0');
-// const current1El = document.getElementById('current--1');
+const current0El = document.getElementById('current--0');
+const current1El = document.getElementById('current--1');
 const player0El = document.querySelector('.player--0');
 const player1El = document.querySelector('.player--1');
 
-const score = [0, 0];
-let currentScore = 0;
-//当前玩家
-let activePlayer = 0;
-//初始化分数
-score0El.textContent = 0;
-score1El.textContent = 0;
-//游戏状态
-let gameStatus = true;
-//隐藏骰子
-diceEl.classList.add('hidden');
+let score, currentScore, gameStatus, activePlayer;
+
+//初始化
+const initGame = () => {
+  score = [0, 0];
+  currentScore = 0;
+  //游戏状态
+  gameStatus = true;
+  //当前玩家
+  activePlayer = 0;
+  //隐藏骰子
+  diceEl.classList.add('hidden');
+  document
+    .querySelector(`.player--${activePlayer}`)
+    .classList.remove('player--winner');
+  //就算没有active也可以删除 有active也可以添加
+  player0El.classList.add('player--active');
+  player1El.classList.remove('player--active');
+
+  //初始化分数
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  //当前分数
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+};
+
+initGame();
 
 //清空当前分数 并切换玩家
 const clearScoreSwitchPlayer = () => {
@@ -88,6 +105,7 @@ btnHold.addEventListener('click', function () {
         .querySelector(`.player--${activePlayer}`)
         .classList.remove('player--active');
       gameStatus = false;
+      diceEl.classList.add('hidden');
     } else {
       //3.清空当前分数并切换玩家
       clearScoreSwitchPlayer();
@@ -106,3 +124,6 @@ btnHold.addEventListener('click', function () {
   //   player0El.classList.add('player--active');
   // }
 });
+
+//重置游戏按钮
+btnNew.addEventListener('click', initGame);
