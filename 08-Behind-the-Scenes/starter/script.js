@@ -82,6 +82,7 @@ console.log(z === window.z); //false
 
 // console.log(this);
 
+/*
 const calcAge = function (birthYear) {
   console.log(2037 - birthYear);
   console.log(this);
@@ -116,3 +117,59 @@ matilda.calcAge();
 
 const f = jonas.calcAge;
 f();
+*/
+
+//var会在全局创建属性 箭头函数没有自己的this 调用的全局
+//所以等于调用全局的firstName属性
+var firstName = 'Matilda';
+
+const jonas = {
+  firstName: 'Jonas',
+  year: 1991,
+  calcAge: function () {
+    console.log(this);
+    console.log(2037 - this.year);
+
+    // const isMillenial = function () {
+    //   console.log(this);
+    //   console.log(this.year >= 1981 && this.year <= 1996);
+    // };
+    // //这个方法的调用者是calcAge 但是calcAge没有year这个属性
+    // isMillenial();
+
+    //Solution1
+    // const self = this
+    // const isMillenial = function () {
+    //   console.log(self);
+    //   console.log(self.year >= 1981 && self.year <= 1996);
+    // };
+    // isMillenial();
+
+    //Solution2
+    //箭头函数没有自己的this 所以会使用父函数 calcAge的this
+    const isMillenial = () => {
+      console.log(this);
+      console.log(this.year >= 1981 && this.year <= 1996);
+    };
+    isMillenial();
+  },
+
+  //箭头函数没有自己的this 所以这里的this.firstName是undefined
+  greet: () => console.log(`Hey ${this.firstName}`),
+
+  // greet: function () {
+  //   console.log(this);
+  //   console.log(`Hey ${this.firstName}`);
+  // },
+};
+
+jonas.greet();
+jonas.calcAge();
+
+//arguments
+const addExpr = function (a, b) {
+  console.log(arguments);
+  return a + b;
+};
+
+addExpr(2, 5);
