@@ -34,6 +34,7 @@ const firstName = 'Jonas';
 calcAge(1991);
 */
 
+/*
 console.log(me); //undefiend
 // console.log(job); //报错
 // console.log(year); //报错
@@ -77,3 +78,41 @@ const z = 3;
 console.log(x === window.x); //true
 console.log(y === window.y); //false
 console.log(z === window.z); //false
+*/
+
+// console.log(this);
+
+const calcAge = function (birthYear) {
+  console.log(2037 - birthYear);
+  console.log(this);
+};
+
+calcAge(1991);
+
+const calcAgeArrow = birthYear => {
+  console.log(2037 - birthYear);
+  //箭头函数不具备this的功能,所以会被判定为全局的this
+  console.log(this);
+};
+
+calcAgeArrow(1991);
+
+const jonas = {
+  year: 1991,
+  calcAge: function () {
+    console.log(this);
+    console.log();
+  },
+};
+jonas.calcAge();
+
+const matilda = {
+  year: 2017,
+};
+
+matilda.calcAge = jonas.calcAge;
+//this只想调用该方法的对象 所以这里的this是matilda
+matilda.calcAge();
+
+const f = jonas.calcAge;
+f();
