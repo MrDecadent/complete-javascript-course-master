@@ -119,6 +119,7 @@ const f = jonas.calcAge;
 f();
 */
 
+/*
 //var会在全局创建属性 箭头函数没有自己的this 调用的全局
 //所以等于调用全局的firstName属性
 var firstName = 'Matilda';
@@ -173,3 +174,57 @@ const addExpr = function (a, b) {
 };
 
 addExpr(2, 5);
+*/
+
+/*
+let age = 30;
+let oldAge = age;
+age = 31;
+
+console.log(age);
+console.log(oldAge);
+
+const me = {
+  name: 'Jonas',
+  age: 30,
+};
+
+const friend = me;
+friend.age = 27;
+console.log('Me:', me);
+console.log('Friend:', friend);
+*/
+
+//原始类型
+let lastName = 'Williams';
+let oldLastName = lastName;
+lastName = 'Davis';
+console.log(lastName, oldLastName);
+
+//引用类型
+const jessica = {
+  first: 'Jessica',
+  lastName: 'Williams',
+};
+
+const marriedJessica = jessica;
+marriedJessica.lastName = 'Davis';
+console.log('Before marriage:', jessica);
+console.log('After marriage:', marriedJessica);
+
+//复制对象
+const jessica2 = {
+  first: 'Jessica',
+  lastName: 'Williams',
+  age: 27,
+  family: ['Alice', 'Bob'],
+};
+
+//浅拷贝 只拷贝属性
+//如果对象中还有一个对象 复制的结果的对象依然会指向同一个地址
+//这里jessica2的lastName不会随着jessicaCopy变动,但是family会
+const jessicaCopy = Object.assign({}, jessica2);
+jessicaCopy.lastName = 'Davis';
+jessicaCopy.family.push('Mary');
+console.log('Before marriage:', jessica2);
+console.log('After marriage:', jessicaCopy);
