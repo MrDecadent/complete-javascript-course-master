@@ -140,7 +140,7 @@ const book = lufthansa.book;
 //直接使用的话 方法中的this指向全局 this.airline为undefined
 // book(23, 'Sarah Williams');
 
-//让this指向指定的对象
+//call 让this指向指定的对象
 book.call(eurowings, 23, 'Sarah Williams');
 console.log(eurowings);
 
@@ -153,3 +153,44 @@ book.apply(swiss, flightData);
 console.log(swiss);
 //与上面apply一样
 book.call(swiss, ...flightData);
+
+//bind
+const bookEW = book.bind(eurowings);
+const bookLX = book.bind(swiss);
+const bookLH = book.bind(lufthansa);
+bookEW(23, 'Steven Williams');
+bookLX(24, 'Steven Williams');
+bookLH(25, 'Steven Williams');
+
+//可以预先设置参数
+const bookEW23 = book.bind(eurowings, 23);
+bookEW23('Jonas Schmedtmann');
+
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  console.log(this);
+
+  this.planes++;
+  console.log(this.planes);
+};
+//buyPlane函数中的this指向了.buy这个button 所以this.planes是NaN
+// document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane);
+
+const butPlaneBindBuyButton = lufthansa.buyPlane.bind(lufthansa);
+document.querySelector('.buy').addEventListener('click', butPlaneBindBuyButton);
+
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+//不需要绑定this的时候可以使用null
+const addVAT = addTax.bind(null, 0.23);
+console.log('VAT税率:' + addVAT(200));
+
+const setTax = rate => {
+  return function (value) {
+    return value + value * rate;
+  };
+};
+
+const addVAT2 = setTax(0.23);
+console.log(addVAT2(200));
