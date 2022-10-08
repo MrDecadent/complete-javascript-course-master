@@ -74,3 +74,9 @@ const currencies = new Map([
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
+
+let arr = ['a', 'b', 'c', 'd', 'e'];
+
+//slice 返回一个从数组下标开始截取的数组
+console.log(arr.slice(2));
+console.log(arr.slice(2, 4));
