@@ -249,9 +249,10 @@ const poll = {
       )
     );
     if (
-      result > this.answers.length - 1 ||
+      typeof result !== 'number' ||
       result < 0 ||
-      typeof result != 'number'
+      result > this.options.length - 1 ||
+      isNaN(result)
     ) {
       console.log(`answer ${result} wouldn't make sense, right?`);
     } else {
@@ -260,45 +261,30 @@ const poll = {
     this.displayResults();
     this.displayResults('string');
   },
-  displayResults: function (type = 'array') {
+  displayResults(type = 'array') {
     if (type === 'array') {
       console.log(this.answers);
-    } else {
+    } else if (type === 'string') {
       console.log(`Poll results are ${this.answers.join(', ')}`);
     }
   },
 };
 
-const pollAnswer = poll.registerNewAnswer.bind(poll);
-document.querySelector('.poll').addEventListener('click', pollAnswer);
+document
+  .querySelector('.poll')
+  .addEventListener('click', poll.registerNewAnswer.bind(poll));
 
-poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
-poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] });
+poll.displayResults.call({ answers: [5, 2, 3] });
+poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] }, 'string');
 */
 
 /*
-// Immediately Invoked Function Expressions (IIFE)
-const runOnce = function () {
-  console.log('This will never run again');
-};
-runOnce();
+const renOnce = () => console.log('This will never run again');
 
-// IIFE
+//IIFE 立即调用函数表达式
 (function () {
   console.log('This will never run again');
-  const isPrivate = 23;
 })();
-
-// console.log(isPrivate);
-
-(() => console.log('This will ALSO never run again'))();
-
-{
-  const isPrivate = 23;
-  var notPrivate = 46;
-}
-// console.log(isPrivate);
-console.log(notPrivate);
 */
 
 /*
