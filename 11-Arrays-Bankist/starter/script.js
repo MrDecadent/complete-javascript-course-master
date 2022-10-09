@@ -79,4 +79,31 @@ let arr = ['a', 'b', 'c', 'd', 'e'];
 
 //slice 返回一个从数组下标开始截取的数组
 console.log(arr.slice(2));
+//不包含第四个
 console.log(arr.slice(2, 4));
+console.log(arr.slice(-2)); //d e
+console.log(arr.slice(1, -2));
+console.log([...arr]);
+
+//splice 和slice一样功能但是会改变原来的数组
+// console.log(arr.splice(2));
+arr.splice(-1);
+console.log(arr);
+//第二个参数表示的是长度而不是具体索引下标
+arr.splice(1, 2);
+console.log(arr);
+
+//reverse
+arr = ['a', 'b', 'c', 'd', 'e'];
+const arr2 = ['j', 'i', 'h', 'g', 'f'];
+console.log(arr2.reverse());
+//会改变原数组
+console.log(arr2);
+
+//concat
+const letters = arr.concat(arr2);
+console.log(letters);
+console.log([...arr, ...arr2]);
+
+//join
+console.log(letters.join(' - '));
