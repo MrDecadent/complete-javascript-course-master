@@ -75,6 +75,7 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
+/*
 let arr = ['a', 'b', 'c', 'd', 'e'];
 
 //slice 返回一个从数组下标开始截取的数组
@@ -107,3 +108,15 @@ console.log([...arr, ...arr2]);
 
 //join
 console.log(letters.join(' - '));
+*/
+
+const arr = [23, 11, 64];
+console.log(arr[0]);
+console.log(arr.at(0));
+//不知道数组长度 拿到数组的最后一个值
+console.log(arr[arr.length - 1]);
+console.log(arr.slice(-1)[0]);
+console.log(arr.at(-1));
+
+console.log('jonas'.at(0));
+console.log('jonas'.at(-1));
