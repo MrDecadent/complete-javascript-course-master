@@ -223,6 +223,7 @@ TEST DATA 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
 GOOD LUCK 😀
 */
 
+/*
 const checkDogs = function (dogsJulia, dogsKate) {
   const juliaCP = dogsJulia.slice(1, -2);
   const juliaBothKate = juliaCP.concat(dogsKate);
@@ -239,3 +240,31 @@ const checkDogs = function (dogsJulia, dogsKate) {
 checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
 console.log('-----DATA 2-----');
 checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
+*/
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const eurToUsd = 1.1;
+
+// const movementsUSD = movements.map(function (value, key, map) {
+//   return value * eurToUsd;
+// });
+
+const movementsUSD = movements.map((value, key, map) => value * eurToUsd);
+
+console.log(movements);
+console.log(movementsUSD);
+
+const movementsUSDfor = [];
+for (const mov of movements) {
+  movementsUSDfor.push(mov * eurToUsd);
+}
+console.log(movementsUSDfor);
+
+//foreach需要创建一个新的数组来存储计算的值，map则不需要
+
+const movementsDescriptions = movements.map((value, index, arr) => {
+  let temp = value > 0 ? `deposited` : `withdrew`;
+  return `Movement ${index + 1} : You ${temp} ${Math.abs(value)}`;
+});
+console.log(movementsDescriptions);
