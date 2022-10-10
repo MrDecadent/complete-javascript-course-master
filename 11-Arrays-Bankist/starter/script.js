@@ -92,7 +92,7 @@ const createUsernames = accs => {
   });
 };
 createUsernames(accounts);
-console.log(accounts);
+// console.log(accounts);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -284,3 +284,18 @@ const movementsDescriptions = movements.map((value, index, arr) => {
 });
 console.log(movementsDescriptions);
 */
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const deposits = movements.filter(function (mov) {
+  //会把false过滤掉
+  return mov > 0;
+});
+console.log(deposits);
+
+const depositsFor = [];
+for (const mov of movements) if (mov > 0) depositsFor.push(mov);
+console.log(depositsFor);
+
+const withdrawals = movements.filter(mov => mov < 0);
+console.log(withdrawals);
