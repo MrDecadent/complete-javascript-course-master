@@ -80,6 +80,20 @@ const displayMovements = function (movements) {
   });
 };
 displayMovements(account1.movements);
+
+const createUsernames = accs => {
+  accs.forEach(function (acc) {
+    //在传入的数组中创建一个新的叫username的属性
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+createUsernames(accounts);
+console.log(accounts);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -242,6 +256,7 @@ console.log('-----DATA 2-----');
 checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
 */
 
+/*
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const eurToUsd = 1.1;
@@ -261,10 +276,11 @@ for (const mov of movements) {
 }
 console.log(movementsUSDfor);
 
-//foreach需要创建一个新的数组来存储计算的值，map则不需要
+//foreach可以在原数组创建一个新的属性来存储，map则不会
 
 const movementsDescriptions = movements.map((value, index, arr) => {
   let temp = value > 0 ? `deposited` : `withdrew`;
   return `Movement ${index + 1} : You ${temp} ${Math.abs(value)}`;
 });
 console.log(movementsDescriptions);
+*/
