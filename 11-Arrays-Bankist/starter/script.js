@@ -285,6 +285,7 @@ const movementsDescriptions = movements.map((value, index, arr) => {
 console.log(movementsDescriptions);
 */
 
+/*
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const deposits = movements.filter(function (mov) {
@@ -299,3 +300,20 @@ console.log(depositsFor);
 
 const withdrawals = movements.filter(mov => mov < 0);
 console.log(withdrawals);
+*/
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+console.log(movements);
+
+//reduce的回调函数第一个参数是累加
+//累加头次调用函数时默认是数组第一个元素的值，之后是上一次回调函数的返回值
+//第二个参数是累加的初始值
+const balance = movements.reduce(function (acc, cur, i, arr) {
+  console.log(`Iteration ${i}: ${acc}`);
+  return acc + cur;
+}, 0);
+console.log(balance);
+
+let balance2 = 0;
+for (const mov of movements) balance2 += mov;
+console.log(balance2);
