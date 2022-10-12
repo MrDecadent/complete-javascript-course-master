@@ -61,6 +61,7 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+//展示交易记录
 const displayMovements = function (movements) {
   //清空容器中的记录
   containerMovements.innerHTML = '';
@@ -81,6 +82,7 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
+//给用户对象添加一个用户名 根据owner的小写首字母
 const createUsernames = accs => {
   accs.forEach(function (acc) {
     //在传入的数组中创建一个新的叫username的属性
@@ -91,8 +93,15 @@ const createUsernames = accs => {
       .join('');
   });
 };
+
+//计算出当前总金额
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, value) => (acc += value), 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+
 createUsernames(accounts);
-// console.log(accounts);
+calcDisplayBalance(account1.movements);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -317,3 +326,12 @@ console.log(balance);
 let balance2 = 0;
 for (const mov of movements) balance2 += mov;
 console.log(balance2);
+
+//找到最大值
+//这里reduce第二个参数不放0是因为数组存在负数，可能数组的最大值就是负数
+const maximum = movements.reduce(
+  (acc, cur) => (acc > cur ? acc : cur),
+  movements[0]
+);
+
+console.log(maximum);
