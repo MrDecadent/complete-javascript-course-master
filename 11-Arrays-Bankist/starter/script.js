@@ -100,8 +100,30 @@ const calcDisplayBalance = function (movements) {
   labelBalance.textContent = `${balance} EUR`;
 };
 
+//计算收入与支出与利息
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter(value => value > 0)
+    .reduce((acc, value) => (acc += value));
+  const outcomes = movements
+    .filter(value => value < 0)
+    .reduce((acc, value) => (acc += value));
+  const interest = movements
+    .map(value => (value > 0 ? value : Math.abs(value)))
+    .reduce((acc, value) => {
+      //千分之二的利息 不够1则收1
+      let int = value * 0.002 > 1 ? value * 0.02 : 1;
+      return (acc += int);
+    }, 0);
+  //把总收入支出与利息显示在界面中
+  labelSumIn.textContent = `${incomes}€`;
+  labelSumOut.textContent = `${Math.abs(outcomes)}€`;
+  labelSumInterest.textContent = `${interest}€`;
+};
+
 createUsernames(accounts);
 calcDisplayBalance(account1.movements);
+calcDisplaySummary(account1.movements);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -359,6 +381,7 @@ TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
 GOOD LUCK 😀
 */
 
+/*
 const calcAverageHumanAge = function (ages) {
   const humanage = ages.map(function (value, index) {
     return value <= 2 ? 2 * value : 16 + value * 4;
@@ -374,3 +397,21 @@ const calcAverageHumanAge = function (ages) {
 
 calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+*/
+
+/*
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+//Coding Challenge #2 一步到位 链式编程
+
+const eurToUsd = 1.1;
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)
+  // .map(mov => mov * eurToUsd)
+  .map((mov, i, arr) => {
+    console.log(arr); //可以中途查看数据变化
+    return mov * eurToUsd;
+  })
+  .reduce((acc, value) => (acc += value));
+console.log(totalDepositsUSD);
+*/
