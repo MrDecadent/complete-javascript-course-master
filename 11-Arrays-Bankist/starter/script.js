@@ -135,7 +135,7 @@ calcDisplaySummary(account1.movements);
 //   ['GBP', 'Pound sterling'],
 // ]);
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
@@ -188,7 +188,6 @@ console.log('jonas'.at(-1));
 */
 
 /*
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // for (const movement of movements) {
 for (const [i, movement] of movements.entries()) {
@@ -288,7 +287,6 @@ checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
 */
 
 /*
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const eurToUsd = 1.1;
 
@@ -317,7 +315,6 @@ console.log(movementsDescriptions);
 */
 
 /*
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const deposits = movements.filter(function (mov) {
   //会把false过滤掉
@@ -334,8 +331,6 @@ console.log(withdrawals);
 */
 
 /*
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-console.log(movements);
 
 //reduce的回调函数第一个参数是累加
 //累加头次调用函数时默认是数组第一个元素的值，之后是上一次回调函数的返回值
@@ -400,7 +395,6 @@ calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
 */
 
 /*
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 //Coding Challenge #2 一步到位 链式编程
 
@@ -428,6 +422,7 @@ TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
 GOOD LUCK 😀
 */
 
+/*
 const calcAverageHumanAge = ages =>
   ages
     .map(value => (value <= 2 ? 2 * value : 16 + value * 4))
@@ -437,3 +432,11 @@ const calcAverageHumanAge = ages =>
 const result1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 const result2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
 console.log(result1, result2);
+*/
+
+//filter会返回符合条件的新数组 find会返回第一个符合条件的对象
+console.log(movements.filter(value => value < 0));
+console.log(movements.find(value => value < 0));
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
