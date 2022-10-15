@@ -80,7 +80,6 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-displayMovements(account1.movements);
 
 //给用户对象添加一个用户名 根据owner的小写首字母
 const createUsernames = accs => {
@@ -93,6 +92,7 @@ const createUsernames = accs => {
       .join('');
   });
 };
+createUsernames(accounts);
 
 //计算出当前总金额
 const calcDisplayBalance = function (movements) {
@@ -101,7 +101,7 @@ const calcDisplayBalance = function (movements) {
 };
 
 //计算收入与支出与利息
-const calcDisplaySummary = function (movements) {
+const calcDisplaySummary = function (movements, interestRate) {
   const incomes = movements
     .filter(value => value > 0)
     .reduce((acc, value) => (acc += value));
@@ -112,7 +112,8 @@ const calcDisplaySummary = function (movements) {
     .map(value => (value > 0 ? value : Math.abs(value)))
     .reduce((acc, value) => {
       //千分之二的利息 不够1则收1
-      let int = value * 0.002 > 1 ? value * 0.02 : 1;
+      let int =
+        value * (value * interestRate) > 1 ? (value * interestRate) / 100 : 1;
       return (acc += int);
     }, 0);
   //把总收入支出与利息显示在界面中
@@ -121,9 +122,36 @@ const calcDisplaySummary = function (movements) {
   labelSumInterest.textContent = `${interest}€`;
 };
 
-createUsernames(accounts);
-calcDisplayBalance(account1.movements);
-calcDisplaySummary(account1.movements);
+//登陆事件
+let currentAccount;
+btnLogin.addEventListener('click', function (event) {
+  //阻止默认操作 button是提交
+  event.preventDefault();
+  currentAccount = accounts.find(
+    value =>
+      inputLoginUsername.value === value.username &&
+      Number(inputLoginPin.value) === value.pin
+  );
+  //没有用户的话会是undefined 在if中会转成false
+  if (currentAccount) {
+    //登陆成功 展示UI和信息
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    containerApp.style.opacity = 100;
+    //展示交易记录
+    displayMovements(currentAccount.movements);
+    //计算出当前总金额
+    calcDisplayBalance(currentAccount.movements);
+    //计算收入与支出与利息
+    calcDisplaySummary(currentAccount.movements, currentAccount.interestRate);
+    //清空登录信息
+    inputLoginUsername.value = inputLoginPin.value = '';
+    //让账号密码输入框失去焦点
+    inputLoginPin.blur();
+    inputLoginUsername.blur();
+  }
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -434,9 +462,11 @@ const result2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
 console.log(result1, result2);
 */
 
+/*
 //filter会返回符合条件的新数组 find会返回第一个符合条件的对象
 console.log(movements.filter(value => value < 0));
 console.log(movements.find(value => value < 0));
 
 const account = accounts.find(acc => acc.owner === 'Jessica Davis');
 console.log(account);
+*/
