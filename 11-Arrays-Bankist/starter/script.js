@@ -185,6 +185,30 @@ btnTransfer.addEventListener('click', function (event) {
   }
 });
 
+//注销账号
+btnClose.addEventListener('click', function (event) {
+  //阻止默认操作 button是提交
+  event.preventDefault();
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    //findindex和indexOf都是返回下标 但是findindex可以写条件 而indexOf只是判断是否存在
+    //找到要删除的账户的index
+    const index = accounts.findIndex(
+      acc => currentAccount.username === acc.username
+    );
+    console.log(index);
+    //将accounts数组中的账号删除
+    accounts.splice(index, 1);
+
+    //隐藏UI
+    containerApp.style.opacity = 0;
+    //清空注销栏信息
+    inputCloseUsername.value = inputClosePin.value = '';
+  }
+});
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
