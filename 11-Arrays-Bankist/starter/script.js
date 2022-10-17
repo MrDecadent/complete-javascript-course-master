@@ -95,9 +95,10 @@ const createUsernames = accs => {
 createUsernames(accounts);
 
 //计算出当前总金额
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, value) => (acc += value), 0);
-  labelBalance.textContent = `${balance} EUR`;
+const calcDisplayBalance = function (account) {
+  const balance = account.movements.reduce((acc, value) => (acc += value), 0);
+  account.balance = balance;
+  labelBalance.textContent = `${account.balance} EUR`;
 };
 
 //计算收入与支出与利息
@@ -111,7 +112,7 @@ const calcDisplaySummary = function (movements, interestRate) {
   const interest = movements
     .map(value => (value > 0 ? value : Math.abs(value)))
     .reduce((acc, value) => {
-      //千分之二的利息 不够1则收1
+      //利息不够1则收1
       let int =
         value * (value * interestRate) > 1 ? (value * interestRate) / 100 : 1;
       return (acc += int);
@@ -120,6 +121,15 @@ const calcDisplaySummary = function (movements, interestRate) {
   labelSumIn.textContent = `${incomes}€`;
   labelSumOut.textContent = `${Math.abs(outcomes)}€`;
   labelSumInterest.textContent = `${interest}€`;
+};
+
+const updateUI = function (currentAccount) {
+  //展示交易记录
+  displayMovements(currentAccount.movements);
+  //计算出当前总金额
+  calcDisplayBalance(currentAccount);
+  //计算收入与支出与利息
+  calcDisplaySummary(currentAccount.movements, currentAccount.interestRate);
 };
 
 //登陆事件
@@ -139,17 +149,39 @@ btnLogin.addEventListener('click', function (event) {
       currentAccount.owner.split(' ')[0]
     }`;
     containerApp.style.opacity = 100;
-    //展示交易记录
-    displayMovements(currentAccount.movements);
-    //计算出当前总金额
-    calcDisplayBalance(currentAccount.movements);
-    //计算收入与支出与利息
-    calcDisplaySummary(currentAccount.movements, currentAccount.interestRate);
+    //计算并展示信息
+    updateUI(currentAccount);
     //清空登录信息
     inputLoginUsername.value = inputLoginPin.value = '';
     //让账号密码输入框失去焦点
     inputLoginPin.blur();
     inputLoginUsername.blur();
+  }
+});
+
+//转账
+btnTransfer.addEventListener('click', function (event) {
+  //阻止默认操作 button是提交
+  event.preventDefault();
+  //拿到要转账的人的对象
+  const TransferAccount = accounts.find(
+    value => value.username === inputTransferTo.value
+  );
+  const amount = Number(inputTransferAmount.value);
+  //金额需要是正数 金额小于等于当前余额 转账对象不能是自己 转账对象是存在的
+  if (
+    amount > 0 &&
+    TransferAccount &&
+    amount <= currentAccount.balance &&
+    TransferAccount.owner !== currentAccount.owner
+  ) {
+    //转账过程
+    currentAccount.movements.push(-amount);
+    TransferAccount.movements.push(amount);
+    //重新计算并展示信息
+    updateUI(currentAccount);
+    //清空转帐栏信息
+    inputTransferTo.value = inputTransferAmount.value = '';
   }
 });
 
