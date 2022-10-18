@@ -552,6 +552,7 @@ const anyDeposits = movements.some(value => value > 3500);
 console.log(anyDeposits);
 */
 
+/*
 //some只要符合一个条件就是true every需要所有都满足
 console.log(movements.every(value => value > 0));
 
@@ -559,3 +560,28 @@ const deposit = value => value > 0;
 console.log(movements.some(deposit));
 console.log(movements.every(deposit));
 console.log(movements.filter(deposit));
+*/
+
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat(2));
+
+const accountMovements = accounts.map(acc => acc.movements);
+console.log(accountMovements);
+const allMovements = accountMovements.flat();
+console.log(allMovements);
+const overallBalance = allMovements.reduce((acc, value) => (acc += value), 0);
+console.log(overallBalance);
+
+const overallBalance2 = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, value) => (acc += value), 0);
+console.log(overallBalance2);
+
+const overallBalance3 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, value) => (acc += value), 0);
+console.log(overallBalance3);
