@@ -185,6 +185,22 @@ btnTransfer.addEventListener('click', function (event) {
   }
 });
 
+btnLoan.addEventListener('click', function (event) {
+  //阻止默认操作 button是提交
+  event.preventDefault();
+  const amount = Number(inputLoanAmount.value);
+  //所有记录至少一条需大于借出的金额的10%以上
+  if (
+    amount > 0 &&
+    currentAccount.movements.some(value => value >= amount * 0.1)
+  ) {
+    //更新记录
+    currentAccount.movements.push(amount);
+    updateUI(currentAccount);
+    inputLoanAmount.value = '';
+  }
+});
+
 //注销账号
 btnClose.addEventListener('click', function (event) {
   //阻止默认操作 button是提交
@@ -526,3 +542,20 @@ console.log(movements.find(value => value < 0));
 const account = accounts.find(acc => acc.owner === 'Jessica Davis');
 console.log(account);
 */
+
+/*
+console.log(movements);
+//存在就true
+console.log(movements.includes(-130));
+
+const anyDeposits = movements.some(value => value > 3500);
+console.log(anyDeposits);
+*/
+
+//some只要符合一个条件就是true every需要所有都满足
+console.log(movements.every(value => value > 0));
+
+const deposit = value => value > 0;
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
