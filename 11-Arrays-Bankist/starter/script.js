@@ -62,11 +62,15 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 //展示交易记录
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   //清空容器中的记录
   containerMovements.innerHTML = '';
+  //sort会改变原数组 所以使用slice复制一份
+  const movs = sort
+    ? movements.slice(0).sort((a, b) => (a > b ? 1 : -1))
+    : movements;
 
-  movements.forEach(function (mov, i, arr) {
+  movs.forEach(function (mov, i, arr) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
       <div class="movements__row">
@@ -223,6 +227,13 @@ btnClose.addEventListener('click', function (event) {
     //清空注销栏信息
     inputCloseUsername.value = inputClosePin.value = '';
   }
+});
+
+//交易记录排序
+let sorted = false;
+btnSort.addEventListener('click', function () {
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
 
 /////////////////////////////////////////////////
@@ -562,6 +573,7 @@ console.log(movements.every(deposit));
 console.log(movements.filter(deposit));
 */
 
+/*
 const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
 console.log(arr.flat());
 
@@ -585,3 +597,18 @@ const overallBalance3 = accounts
   .flatMap(acc => acc.movements)
   .reduce((acc, value) => (acc += value), 0);
 console.log(overallBalance3);
+*/
+
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+//排序 会改变原数组
+console.log(owners.sort());
+//数字一样会按照字符串的方式排序
+// console.log(movements.sort());
+
+//返回 < 0 a在b之前
+//返回 > 0 b在a之前
+movements.sort((a, b) => (a > b ? 1 : -1));
+console.log(movements);
+//降序
+movements.sort((a, b) => (a > b ? -1 : 1));
+console.log(movements);
