@@ -599,6 +599,7 @@ const overallBalance3 = accounts
 console.log(overallBalance3);
 */
 
+/*
 const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
 //排序 会改变原数组
 console.log(owners.sort());
@@ -612,3 +613,30 @@ console.log(movements);
 //降序
 movements.sort((a, b) => (a > b ? -1 : 1));
 console.log(movements);
+*/
+
+const x = new Array(7);
+//填充1到数组x 从3开始到5结束
+x.fill(1, 3, 5);
+console.log(x);
+
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
+
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z);
+
+const randomArr = Array.from(
+  { length: 100 },
+  () => Math.trunc(Math.random() * 100) + 1
+);
+console.log(randomArr);
+
+labelBalance.addEventListener('click', function () {
+  const movementUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    value => value.textContent.replace('€', '')
+  );
+  console.log(movementUI);
+  console.log(movementUI.reduce((acc, value) => (acc += value), 0));
+});
