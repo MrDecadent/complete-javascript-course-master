@@ -615,6 +615,7 @@ movements.sort((a, b) => (a > b ? -1 : 1));
 console.log(movements);
 */
 
+/*
 const x = new Array(7);
 //填充1到数组x 从3开始到5结束
 x.fill(1, 3, 5);
@@ -640,3 +641,64 @@ labelBalance.addEventListener('click', function () {
   console.log(movementUI);
   console.log(movementUI.reduce((acc, value) => (acc += value), 0));
 });
+*/
+
+///////////////////////////////////////
+// Array Methods Practice
+
+//1.
+const bankDepositSum = accounts
+  .map(value => value.movements) //拿到所有数组
+  .flat() //把所有数组整合在一起
+  .filter(value => value > 0) //过滤负数
+  .reduce((acc, value) => (acc += value)); //计算总和
+
+console.log(bankDepositSum);
+
+//2.
+// const numDeposits$1000 = accounts
+//   .map(value => value.movements) //拿到所有数组
+//   .flat() //把所有数组整合在一起
+//   .filter(value => value >= 1000).length; //过滤大于等于1000
+
+const numDeposits$1000 = accounts
+  .map(value => value.movements) //拿到所有数组
+  .flat() //把所有数组整合在一起
+  .reduce((acc, value) => (value >= 1000 ? ++acc : acc), 0);
+
+console.log(numDeposits$1000);
+
+//3.
+const sums = accounts
+  .map(value => value.movements)
+  .flat()
+  .reduce(
+    (acc, value) => {
+      // value > 0 ? (acc.deposits += value) : (acc.withdrawals += value);
+      acc[value > 0 ? 'deposits' : 'withdrawals'] += value;
+      return acc;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+
+console.log(sums);
+
+//4.
+// this is a nice title => This Is a Nice Title
+const convertTitleCase = function (title) {
+  const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
+
+  const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map(word =>
+      exceptions.includes(word) ? word : word[0].toUpperCase() + word.slice(1)
+    )
+    .join(' ');
+
+  return titleCase;
+};
+
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title but not too long'));
+console.log(convertTitleCase('and here is another title with an EXAMPLE'));
