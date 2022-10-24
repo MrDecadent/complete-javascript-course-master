@@ -58,7 +58,7 @@ header.append(message);
 //一个元素只会出现在一个地方 如果多个地方都需要的话 使用克隆
 // header.append(message.cloneNode(true));
 
-header.before(message);
+// header.before(message);
 // header.after(message);
 
 //删除元素
@@ -66,3 +66,47 @@ document.querySelector('.btn--close-cookie').addEventListener('click', () =>
   //message.remove()
   message.parentElement.removeChild(message)
 );
+
+//Styles
+message.style.backgroundColor = '#37384d';
+message.style.width = '120%';
+
+console.log(message.style.height); //并没有给元素设置高度 所以获取不到
+console.log(getComputedStyle(message).color);
+console.log(getComputedStyle(message).height);
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+
+document.documentElement.style.setProperty('--color-primary', 'orangered');
+
+//属性
+const logo = document.querySelector('.nav__logo');
+console.log(logo.src);
+console.log(logo.alt);
+console.log(logo.className);
+
+logo.alt = 'Beautiful minimalist logo';
+
+console.log(logo.designer); //非标注的属性不可以 undefined
+console.log(logo.getAttribute('designer'));
+logo.setAttribute('company', 'Bankist');
+
+console.log(logo.src); //绝对路径
+console.log(logo.getAttribute('src')); //相对路径
+
+const link = document.querySelector('.nav__link--btn');
+console.log(link.href);
+console.log(link.getAttribute('href'));
+
+// Data attributes
+console.log(logo.dataset.versionNumber);
+
+// Classes
+logo.classList.add('c', 'j');
+logo.classList.remove('c', 'j');
+logo.classList.toggle('c');
+logo.classList.contains('c'); // not includes
+
+// Don't use
+logo.clasName = 'jonas';
