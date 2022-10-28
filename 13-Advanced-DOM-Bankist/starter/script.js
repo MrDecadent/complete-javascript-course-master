@@ -118,29 +118,47 @@ const section1 = document.querySelector('#section--1');
 
 btnScrollTo.addEventListener('click', function (e) {
   const s1coords = section1.getBoundingClientRect();
+  //当前窗口的信息
   console.log(s1coords);
 
   console.log(e.target.getBoundingClientRect());
+  //滚动条的x y
+  console.log('Current scrool (X/Y)', window.pageXOffset, window.pageYOffset);
 
-  console.log('Current scrool (X/Y)', window.pageXOffset, pageYOffset);
-
+  //当前显示的界面的宽高
   console.log(
     'height/width viewport',
     document.documentElement.clientHeight,
     document.documentElement.clientWidth
   );
 
-  //Scrolling
-  // window.scrollTo(
-  //   s1coords.left + window.pageXOffset,
-  //   s1coords.top + window.pageYOffset
-  // );
+  //s1coords.top是根据当前窗口来计算的 所以需要加上滚动条的y
+  // window.scrollTo(s1coords.left, s1coords.top + window.pageYOffset);
 
-  window.scrollTo({
-    left: s1coords.left + window.pageXOffset,
-    top: s1coords.top + window.pageYOffset,
-    behavior: 'smooth',
-  });
+  // window.scrollTo({
+  //   left: s1coords.left,
+  //   top: s1coords.top + window.pageYOffset,
+  //   behavior: 'smooth',
+  // });
 
+  //老的浏览器可能不支持
   section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+const h1 = document.querySelector('h1');
+
+//两者功能一样
+//但是onmouseenter只能有一个函数 新的会覆盖旧的
+//而addEventListener多个函数会并存
+const alertH1 = function (e) {
+  //mouseenter:当鼠标进入的时候触发
+  alert('addEventListener:Great! You are reading the heading :D');
+};
+
+h1.addEventListener('mouseenter', alertH1);
+
+setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+
+// h1.onmouseenter = function (e) {
+//   alert('addEventListener:Great! You are reading the heading2 :D');
+// };
