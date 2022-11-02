@@ -112,24 +112,60 @@ car2.brake();
 
 // 类声明
 class PersonCl {
-  constructor(firstName, birthYear) {
-    this.firstName = firstName;
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
     this.birthYear = birthYear;
   }
   //这个方法会创建在类的原型上而不会在类本身
   calcAge() {
     console.log(2022 - this.birthYear);
   }
+
+  get age() {
+    return 2022 - this.birthYear;
+  }
+
+  set fullName(name) {
+    console.log(name);
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name`);
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
 }
 
-const jessica = new PersonCl('Jessica', 1996);
+const jessica = new PersonCl('Jessica Davis', 1996);
 console.log(jessica);
 jessica.calcAge();
+console.log(jessica.age);
 
 console.log(jessica.__proto__);
 
 //依然可以通过原型的方式创建方法
 PersonCl.prototype.greet = function () {
-  console.log(`Hey ${this.firstName}`);
+  console.log(`Hey ${this.fullName}`);
 };
 jessica.greet();
+
+//getter and setter
+const account = {
+  owner: 'jonas',
+  movement: [200, 530, 120, 300],
+
+  get latest() {
+    return this.movement.slice(-1).pop();
+  },
+
+  set latest(mov) {
+    this.movement.push(mov);
+  },
+};
+
+console.log(account.latest);
+
+account.latest = 114;
+console.log(account.movement);
+
+const walter = new PersonCl('Walter', 1965);
