@@ -1,5 +1,6 @@
 'use strict';
 
+/*
 const Person = function (firstName, birthYear) {
   //   console.log(this);
   this.firstName = firstName;
@@ -62,6 +63,7 @@ console.log(arr.unique());
 
 const h1 = document.querySelector('h1');
 console.dir(x => x + 1);
+*/
 
 ///////////////////////////////////////
 // Coding Challenge #1
@@ -78,6 +80,7 @@ DATA CAR 2: 'Mercedes' going at 95 km/h
 GOOD LUCK 😀
 */
 
+/*
 const Car = function (make, speed) {
   this.make = make;
   this.speed = speed;
@@ -101,3 +104,32 @@ car1.brake();
 const car2 = new Car('Mercedes', 95);
 car2.accelerate();
 car2.brake();
+*/
+
+//ES6 创建类
+// 类表达
+//const PersonCl = class{}
+
+// 类声明
+class PersonCl {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+  //这个方法会创建在类的原型上而不会在类本身
+  calcAge() {
+    console.log(2022 - this.birthYear);
+  }
+}
+
+const jessica = new PersonCl('Jessica', 1996);
+console.log(jessica);
+jessica.calcAge();
+
+console.log(jessica.__proto__);
+
+//依然可以通过原型的方式创建方法
+PersonCl.prototype.greet = function () {
+  console.log(`Hey ${this.firstName}`);
+};
+jessica.greet();
