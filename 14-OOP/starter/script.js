@@ -134,6 +134,11 @@ class PersonCl {
   get fullName() {
     return this._fullName;
   }
+
+  // 静态方法
+  static hey() {
+    return this._fullName;
+  }
 }
 
 const jessica = new PersonCl('Jessica Davis', 1996);
@@ -169,3 +174,7 @@ account.latest = 114;
 console.log(account.movement);
 
 const walter = new PersonCl('Walter', 1965);
+
+// hey是静态方法 所以无法继承 walter无法使用
+PersonCl.hey();
+walter.hey();
