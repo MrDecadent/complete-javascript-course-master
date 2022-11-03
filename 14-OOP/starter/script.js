@@ -106,6 +106,7 @@ car2.accelerate();
 car2.brake();
 */
 
+/*
 //ES6 创建类
 // 类表达
 //const PersonCl = class{}
@@ -176,5 +177,29 @@ console.log(account.movement);
 const walter = new PersonCl('Walter', 1965);
 
 // hey是静态方法 所以无法继承 walter无法使用
-PersonCl.hey();
-walter.hey();
+// PersonCl.hey();
+// walter.hey();
+*/
+
+const PersonProto = {
+  calcAge() {
+    console.log(2022 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+steven.name = 'Steven';
+steven.birthYear = 1991;
+steven.calcAge();
+console.log(steven);
+
+console.log(steven.__proto__ === PersonProto);
+
+const sarah = Object.create(PersonProto);
+sarah.init('Sarah', 1979);
+sarah.calcAge();
