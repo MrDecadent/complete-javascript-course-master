@@ -220,6 +220,7 @@ DATA CAR 1: 'Ford' going at 120 km/h
 GOOD LUCK 😀
 */
 
+/*
 class Car {
   constructor(make, speed) {
     this.make = make;
@@ -251,3 +252,36 @@ car3.brake();
 console.log(car3.speedUS);
 car3.speedUS = 50;
 console.log(car3);
+*/
+
+// 继承
+
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () {
+  console.log(2022 - this.birthYear);
+};
+
+const Student = function (firstName, birthYear, course) {
+  // call 让this去调用Person的构造函数
+  Person.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+// 将学生的原型和Person的原型做关联
+Student.prototype = Object.create(Person.prototype);
+
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and i study ${this.course}`);
+};
+
+const mike = new Student('Mike', 2018, 'Science');
+mike.introduce();
+mike.calcAge();
+
+// 因为原型已经关联过 所以都为true
+console.log(mike instanceof Student);
+console.log(mike instanceof Person);
