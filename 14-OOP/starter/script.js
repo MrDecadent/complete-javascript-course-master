@@ -417,6 +417,7 @@ martha.calcAge();
 ///////////////////////////////////////
 // Inheritance Between "Classes": Object.create
 
+/*
 const PersonProto = {
   calcAge() {
     console.log(2037 - this.birthYear);
@@ -445,3 +446,46 @@ const jay = Object.create(StudentProto);
 jay.init('Jay', 2021, 'Computer Science');
 jay.introduce();
 jay.calcAge();
+*/
+
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+    this.movements = [];
+    this.locale = navigator.language;
+
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+
+  deposit(val) {
+    this.movements.push(val);
+  }
+
+  withdraw(val) {
+    this.deposit(-val);
+  }
+
+  approveLoan(val) {
+    return true;
+  }
+
+  requestLoan(val) {
+    if (this.approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Loan approved`);
+    }
+  }
+}
+
+const acc1 = new Account('Jonas', 'EUR', 1111);
+
+// 虽然可行,但是尽量不要直接操作属性,而是通过方法的方式 可以复用代码
+// acc1.movements.push(2500);
+// acc1.movements.push(-150);
+acc1.deposit(2500);
+acc1.withdraw(150);
+
+console.log(acc1);
+console.log(acc1.pin);
