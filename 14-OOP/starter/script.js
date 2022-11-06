@@ -449,39 +449,49 @@ jay.calcAge();
 */
 
 class Account {
+  // 公共字段
+  locale = navigator.language;
+
+  // 私有字段
+  #movements = [];
+  #pin;
+
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this._pin = pin;
+    this.#pin = pin;
     // js的约定 前面下划线的属性为私有的
     // 但也只是约定 并不代表真正的私有
-    this._movements = [];
+    // this._pin = pin;
+    // this._movements = [];
     this.locale = navigator.language;
 
     console.log(`Thanks for opening an account, ${owner}`);
   }
 
+  // 公共方法
   getMovements() {
-    return this._movements;
+    return this.#movements;
   }
 
   deposit(val) {
-    this._movements.push(val);
+    this.#movements.push(val);
   }
 
   withdraw(val) {
     this.deposit(-val);
   }
 
-  _approveLoan(val) {
-    return true;
-  }
-
   requestLoan(val) {
-    if (this._approveLoan(val)) {
+    if (this.#approveLoan(val)) {
       this.deposit(val);
       console.log(`Loan approved`);
     }
+  }
+
+  // 私有方法
+  #approveLoan(val) {
+    return true;
   }
 }
 
@@ -496,3 +506,6 @@ console.log(acc1.getMovements());
 
 console.log(acc1);
 // console.log(acc1.pin);
+//不能访问私有字段
+// console.log(acc1.#movements);
+acc1.requestLoan(100);
