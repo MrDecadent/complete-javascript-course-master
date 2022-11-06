@@ -476,16 +476,19 @@ class Account {
 
   deposit(val) {
     this.#movements.push(val);
+    return this;
   }
 
   withdraw(val) {
     this.deposit(-val);
+    return this;
   }
 
   requestLoan(val) {
     if (this.#approveLoan(val)) {
       this.deposit(val);
       console.log(`Loan approved`);
+      return this;
     }
   }
 
@@ -509,3 +512,7 @@ console.log(acc1);
 //不能访问私有字段
 // console.log(acc1.#movements);
 acc1.requestLoan(100);
+
+//链式编程
+acc1.deposit(300).deposit(500).withdraw(350).requestLoan(2500).withdraw(1000);
+console.log(acc1.getMovements());
