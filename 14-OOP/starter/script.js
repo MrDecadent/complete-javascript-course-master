@@ -549,6 +549,14 @@ class Car {
     console.log(`${this.make} is going at ${this.speed} km/h`);
     return this;
   }
+
+  get speedUS() {
+    return this.speed / 1.6;
+  }
+
+  set speedUS(speed) {
+    this.speed = speed * 1.6;
+  }
 }
 
 class EV extends Car {
@@ -561,6 +569,7 @@ class EV extends Car {
 
   accelerate() {
     this.speed += 10;
+    this.#charge--;
     console.log(`${this.make} is going at ${this.speed} km/h`);
     return this;
   }
@@ -573,3 +582,12 @@ class EV extends Car {
 
 const car4 = new EV('Rivian', 120, 23);
 console.log(car4);
+car4
+  .accelerate()
+  .accelerate()
+  .accelerate()
+  .brake()
+  .chargeBattery(50)
+  .accelerate();
+
+console.log(car4.speedUS);
