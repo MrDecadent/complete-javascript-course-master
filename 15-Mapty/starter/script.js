@@ -17,7 +17,7 @@ if (navigator.geolocation) {
       // 等价于 const latitude = position.coords.latitude
       const { latitude } = position.coords;
       const { longitude } = position.coords;
-      console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
+      // console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
 
       const coords = [latitude, longitude];
 
@@ -28,10 +28,25 @@ if (navigator.geolocation) {
           '&copy; <a href="https://www.openstreetmap.fr/hot/copyright">OpenStreetMap</a> contributors',
       }).addTo(map);
 
-      L.marker(coords)
-        .addTo(map)
-        .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-        .openPopup();
+      map.on('click', function (mapEvent) {
+        console.log(mapEvent);
+        const { lat, lng } = mapEvent.latlng;
+
+        // 地图中的坐标钉子
+        L.marker([lat, lng])
+          .addTo(map)
+          .bindPopup(
+            L.popup({
+              maxWidth: 250,
+              maxHeight: 100,
+              autoClose: false,
+              closeOnClick: false,
+              className: 'running-popup',
+            })
+          )
+          .setPopupContent('Workout')
+          .openPopup();
+      });
     },
     function () {
       alert('Could not get your position');
