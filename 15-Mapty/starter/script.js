@@ -23,6 +23,7 @@ class Workout {
 }
 
 class Running extends Workout {
+  type = 'running';
   constructor(coords, distance, duration, cadence) {
     super(coords, distance, duration);
     this.cadence = cadence;
@@ -37,6 +38,7 @@ class Running extends Workout {
 }
 
 class Cycling extends Workout {
+  type = 'cycling';
   constructor(coords, distance, duration, elevationGain) {
     super(coords, distance, duration);
     this.elevationGain = elevationGain;
@@ -55,6 +57,7 @@ class Cycling extends Workout {
 class App {
   #map;
   #mapEvent;
+  #workouts = [];
 
   constructor() {
     this._getPosition();
@@ -106,7 +109,53 @@ class App {
   }
 
   _newWorkout(e) {
+    // 检查输入的值是否合法数字
+    const validInputs = (...inputs) =>
+      inputs.every(inp => Number.isFinite(inp));
+    // 检查输入的值是否大于0
+    const allPositive = (...inputs) => inputs.every(inp => 0 > inp);
+
     e.preventDefault();
+
+    // Get data from form
+    const type = inputType.value;
+    // +变成数字类型
+    const distance = +inputDistance.value;
+    const duration = +inputDuration.value;
+    const { lat, lng } = this.#mapEvent.latlng;
+    let workout;
+    // Check if data is valid
+
+    // If activity running, create running object
+    if (type === 'running') {
+      const cadence = +inputCadence.value;
+      if (
+        !validInputs(distance, duration, cadence) &&
+        !allPositive(distance, duration, cadence)
+      )
+        return alert('Inputs have to be positive numbers!');
+
+      workout = new Running([lat, lng], distance, duration, cadence);
+    }
+    // If activity cycling, create cycling object
+    if (type === 'cycling') {
+      const elevation = +inputElevation.value;
+      if (
+        // 海拔可以是复数
+        !validInputs(distance, duration, elevation) &&
+        !allPositive(distance, duration)
+      )
+        return alert('Inputs have to be positive numbers!');
+
+      workout = new Cycling([lat, lng], distance, duration, elevation);
+    }
+
+    // Add new object to Workout array
+    this.#workouts.push(workout);
+    console.log(workout);
+
+    // Render workout on list
+    this.renderWorkoutMarker(workout);
 
     // 把所有输入框清空
     inputDistance.value =
@@ -115,10 +164,12 @@ class App {
       inputElevation.value =
         '';
 
-    console.log(this.#mapEvent);
-    const { lat, lng } = this.#mapEvent.latlng;
-    // 地图中的坐标钉子
-    L.marker([lat, lng])
+    // console.log(this.#mapEvent);
+  }
+
+  // 显示地图中的坐标钉子
+  renderWorkoutMarker(workout) {
+    L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
         L.popup({
@@ -126,10 +177,10 @@ class App {
           maxHeight: 100,
           autoClose: false,
           closeOnClick: false,
-          className: 'running-popup',
+          className: `${workout.type}-popup`,
         })
       )
-      .setPopupContent('Workout')
+      .setPopupContent('workout')
       .openPopup();
   }
 }
