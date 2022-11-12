@@ -14,6 +14,7 @@ const inputElevation = document.querySelector('.form__input--elevation');
 class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10);
+  clicks = 0;
 
   constructor(coords, distance, duration) {
     this.coords = coords; // [lat,lng]
@@ -30,6 +31,11 @@ class Workout {
     this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${
       months[this.date.getMonth()]
     } ${this.date.getDate()}`;
+  }
+
+  // 记录点击次数
+  click() {
+    this.clicks++;
   }
 }
 
@@ -75,6 +81,8 @@ class App {
 
   constructor() {
     this._getPosition();
+    // get data from local storage
+    this._getLocalStorage();
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleElevationField);
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
@@ -108,6 +116,11 @@ class App {
     }).addTo(this.#map);
 
     this.#map.on('click', this._showForm.bind(this));
+
+    // 把从localStorage存储的记录显示在地图上
+    this.#workouts.forEach(work => {
+      this._renderWorkoutMarker(work);
+    });
   }
 
   _showForm(mapE) {
@@ -182,7 +195,6 @@ class App {
 
     // Add new object to Workout array
     this.#workouts.push(workout);
-    console.log(workout);
 
     // Render workout on map as marker
     this._renderWorkoutMarker(workout);
@@ -191,6 +203,9 @@ class App {
     this._renderWorkout(workout);
 
     this._hideForm();
+
+    // Set local storage to all workouts
+    this._setLocalStorage();
 
     // console.log(this.#mapEvent);
   }
@@ -284,7 +299,31 @@ class App {
       },
     });
 
-    // using public interface
+    // using the public interface
+    // workout.click();
+  }
+
+  _setLocalStorage() {
+    // 浏览器提供的API
+    localStorage.setItem('workouts', JSON.stringify(this.#workouts));
+  }
+
+  _getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem('workouts'));
+
+    if (!data) return;
+
+    this.#workouts = data;
+
+    // 把从localStorage存储的记录显示在左侧表格上
+    this.#workouts.forEach(work => {
+      this._renderWorkout(work);
+    });
+  }
+
+  reset() {
+    localStorage.removeItem('workouts');
+    location.reload();
   }
 }
 
