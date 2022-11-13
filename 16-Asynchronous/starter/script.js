@@ -25,12 +25,12 @@ const getCountryData = function (country) {
         <p class="country__row"><span>👫</span>${
           +data.population / (1000000).toFixed(1)
         }</p>
-        <p class="country__row"><span>🗣️</span>${Object.keys(
-          data.languages
-        )}</p>
-        <p class="country__row"><span>💰</span>${Object.keys(
-          data.currencies
-        )}</p>
+        <p class="country__row"><span>🗣️</span>${
+          Object.entries(data.languages)[0][1]
+        }</p>
+        <p class="country__row"><span>💰</span>${
+          Object.entries(data.currencies)[0][1].name
+        }</p>
     </div>
   </article>
   `;
