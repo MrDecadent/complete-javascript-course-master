@@ -64,7 +64,7 @@ const renderCountry = function (data, className = '') {
   </article>
   `;
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
+  // countriesContainer.style.opacity = 1;
 };
 /*
 const getCountryAndNeighbour = function (country) {
@@ -129,6 +129,11 @@ setTimeout(() => {
 //     });
 // };
 
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  // countriesContainer.style.opacity = 1;
+};
+
 // fetch相比起new XMLHttpRequest() 更简化 更易读 不需要依赖监听事件
 const getCountryData = function (country) {
   fetch(`https://restcountries.com/v3.1/name/${country}`)
@@ -144,6 +149,16 @@ const getCountryData = function (country) {
     })
     // 更好的解决了回调地狱
     .then(response => response.json())
-    .then(data => renderCountry(data[0], 'neighbour'));
+    .then(data => renderCountry(data[0], 'neighbour'))
+    .catch(err => {
+      console.error(`${err} 💥💥💥`);
+      renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
 };
-getCountryData('germany');
+
+btn.addEventListener('click', function () {
+  getCountryData('germany');
+});
