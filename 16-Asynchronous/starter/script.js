@@ -134,21 +134,59 @@ const renderError = function (msg) {
   // countriesContainer.style.opacity = 1;
 };
 
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(response => {
+    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+
+    return response.json();
+  });
+};
+
 // fetch相比起new XMLHttpRequest() 更简化 更易读 不需要依赖监听事件
+// const getCountryData = function (country) {
+//   fetch(`https://restcountries.com/v3.1/name/${country}`)
+//     .then(response => {
+//       if (!response.ok)
+//         throw new Error(`Country not found (${response.status})`);
+//       return response.json();
+//     })
+//     .then(data => {
+//       renderCountry(data[0]);
+//       const neighbour = data[0].borders[0];
+
+//       if (!neighbour) return;
+
+//       // 二次请求
+//       return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`);
+//     })
+//     // 更好的解决了回调地狱
+//     .then(response => {
+//       if (!response.ok)
+//         throw new Error(`Country not found (${response.status})`);
+
+//       return response.json();
+//     })
+//     .then(data => renderCountry(data[0], 'neighbour'))
+//     .catch(err => {
+//       console.error(`${err} 💥💥💥`);
+//       renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
+//     })
+//     .finally(() => {
+//       countriesContainer.style.opacity = 1;
+//     });
+// };
+
 const getCountryData = function (country) {
-  fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then(response => response.json())
+  getJSON(`https://restcountries.com/v3.1/name/${country}`)
     .then(data => {
       renderCountry(data[0]);
+
+      if (!data[0].borders) throw new Error(`No neighbour found!`);
       const neighbour = data[0].borders[0];
 
-      if (!neighbour) return;
-
       // 二次请求
-      return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`);
+      return getJSON(`https://restcountries.com/v3.1/alpha/${neighbour}`);
     })
-    // 更好的解决了回调地狱
-    .then(response => response.json())
     .then(data => renderCountry(data[0], 'neighbour'))
     .catch(err => {
       console.error(`${err} 💥💥💥`);
@@ -160,5 +198,5 @@ const getCountryData = function (country) {
 };
 
 btn.addEventListener('click', function () {
-  getCountryData('germany');
+  getCountryData('japan');
 });
