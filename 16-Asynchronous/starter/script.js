@@ -267,6 +267,7 @@ whereAmI(19.037, 72.873, '751658150484791677093x85572');
 whereAmI(-33.933, 18.474, '751658150484791677093x85572');
 */
 
+/*
 //1432，普通的同步任务优先执行，异步任务在webapis环境运行，
 //promise的回调在微任务处等待，事件循环优先循环，其余回调在回调序列等待，调用堆栈为空时一个个调用
 console.log('Test start');
@@ -277,3 +278,41 @@ Promise.resolve('Resolved promise 2').then(res => {
   console.log(res);
 });
 console.log('Test end');
+*/
+
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log('Lotter draw is happening 🔮');
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      resolve('You WIN 💴');
+    } else {
+      reject(new Error('You lost your money 💩'));
+    }
+  }, 2000);
+});
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+wait(2)
+  .then(() => {
+    console.log('I waited for 2 seconds');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('I waited for 3 seconds');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('I waited for 4 seconds');
+    return wait(1);
+  })
+  .then(() => console.log('I waited for 5 second'));
+
+Promise.resolve('abc').then(x => console.log(x));
+Promise.reject('abc').catch(x => console.error(x));
