@@ -235,6 +235,7 @@ TEST COORDINATES 2: -33.933, 18.474
 GOOD LUCK 😀
 */
 
+/*
 const whereAmI = function (lat, lng, api_key) {
   fetch(`https://geocode.xyz/${lat},${lng}?geoit=json&auth=${api_key}`)
     .then(response => {
@@ -264,3 +265,15 @@ const whereAmI = function (lat, lng, api_key) {
 whereAmI(52.508, 13.381, '751658150484791677093x85572');
 whereAmI(19.037, 72.873, '751658150484791677093x85572');
 whereAmI(-33.933, 18.474, '751658150484791677093x85572');
+*/
+
+//1432，普通的同步任务优先执行，异步任务在webapis环境运行，
+//promise的回调在微任务处等待，事件循环优先循环，其余回调在回调序列等待，调用堆栈为空时一个个调用
+console.log('Test start');
+setTimeout(() => console.log('0 sec timer'), 0);
+Promise.resolve('Resolved promise 1').then(res => console.log(res));
+Promise.resolve('Resolved promise 2').then(res => {
+  for (let i = 0; i < 1000000; i++) {}
+  console.log(res);
+});
+console.log('Test end');
