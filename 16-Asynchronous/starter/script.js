@@ -396,6 +396,7 @@ TEST DATA: Images in the img folder. Test the error handler by passing a wrong i
 GOOD LUCK 😀
 */
 
+/*
 const wait = function (seconds) {
   return new Promise(function (resolve) {
     setTimeout(resolve, seconds * 1000);
@@ -448,3 +449,34 @@ createImage('img/img-1.jpg')
   })
   .then(() => (currentImg.style.display = 'none'))
   .catch(err => console.error(err));
+*/
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+const whereAmI = async function (country) {
+  const pos = await getPosition();
+  const { latitude: lat, longitude: lng } = pos.coords;
+
+  // Reverse geocoding
+  const resGeo = await fetch(
+    `https://geocode.xyz/${lat},${lng}?geoit=json&auth=751658150484791677093x85572`
+  );
+  if (!resGeo.ok) throw new Error('Problem getting location data');
+  const dataGeo = await resGeo.json();
+  console.log(dataGeo);
+
+  // fetch(`https://restcountries.com/v3.1/name/${country}`).then(res => console.log(res));
+  // 下面和上面是一样的 await是语法糖
+  const res = await fetch(
+    `https://restcountries.com/v3.1/name/${dataGeo.country}`
+  );
+  const data = await res.json();
+  renderCountry(data[0]);
+};
+
+whereAmI('china');
+console.log('FIRST');
