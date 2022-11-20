@@ -458,25 +458,39 @@ const getPosition = function () {
 };
 
 const whereAmI = async function (country) {
-  const pos = await getPosition();
-  const { latitude: lat, longitude: lng } = pos.coords;
+  try {
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lng } = pos.coords;
 
-  // Reverse geocoding
-  const resGeo = await fetch(
-    `https://geocode.xyz/${lat},${lng}?geoit=json&auth=751658150484791677093x85572`
-  );
-  if (!resGeo.ok) throw new Error('Problem getting location data');
-  const dataGeo = await resGeo.json();
-  console.log(dataGeo);
+    // Reverse geocoding
+    const resGeo = await fetch(
+      `https://geocode.xyz/${lat},${lng}?geoit=json&auth=751658150484791677093x85572`
+    );
+    if (!resGeo.ok) throw new Error('Problem getting location data');
+    const dataGeo = await resGeo.json();
+    // console.log(dataGeo);
 
-  // fetch(`https://restcountries.com/v3.1/name/${country}`).then(res => console.log(res));
-  // 下面和上面是一样的 await是语法糖
-  const res = await fetch(
-    `https://restcountries.com/v3.1/name/${dataGeo.country}`
-  );
-  const data = await res.json();
-  renderCountry(data[0]);
+    // fetch(`https://restcountries.com/v3.1/name/${country}`).then(res => console.log(res));
+    // 下面和上面是一样的 await是语法糖
+    const res = await fetch(
+      `https://restcountries.com/v3.1/name/${dataGeo.country}`
+    );
+    const data = await res.json();
+    renderCountry(data[0]);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-whereAmI('china');
+whereAmI();
+whereAmI();
+whereAmI();
 console.log('FIRST');
+
+// try {
+//   let y = 1;
+//   const x = 2;
+//   x = 3;
+// } catch (err) {
+//   alert(err.message);
+// }
