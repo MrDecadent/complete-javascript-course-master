@@ -507,6 +507,7 @@ console.log('1: Will get location');
 })();
 */
 
+/*
 const get3Countries = async function (c1, c2, c3) {
   try {
     // 这样的写法 三条代码会依次等上一条结束了才会执行 执行时间会比较长
@@ -515,6 +516,7 @@ const get3Countries = async function (c1, c2, c3) {
     // const [data3] = await getJSON(`https://restcountries.com/v3.1/name/${c3}`);
 
     // 三条同时请求
+    // Promise.all 返回所有结果 有错则无法执行
     const data = await Promise.all([
       getJSON(`https://restcountries.com/v3.1/name/${c1}`),
       getJSON(`https://restcountries.com/v3.1/name/${c2}`),
@@ -529,3 +531,45 @@ const get3Countries = async function (c1, c2, c3) {
 };
 
 get3Countries('china', 'Korea', 'Japan');
+*/
+
+// Promise.race 返回最快的结果(包括拒绝)
+(async function () {
+  const res = await Promise.race([
+    getJSON(`https://restcountries.com/v3.1/name/china`),
+    getJSON(`https://restcountries.com/v3.1/name/Korea`),
+    getJSON(`https://restcountries.com/v3.1/name/Japan`),
+  ]);
+  console.log(res[0]);
+})();
+
+const timeout = function (sec) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error('Requese took too long!'));
+    }, sec);
+  });
+};
+
+Promise.race([
+  getJSON(`https://restcountries.com/v3.1/name/china`),
+  timeout(100),
+])
+  .then(res => console.log(res[0]))
+  .catch(err => console.error(err.message));
+
+// Promise.allSettled [ES2020]
+// 返回所有结果不论是否报错
+Promise.allSettled([
+  Promise.resolve('Success'),
+  Promise.reject('Error'),
+  Promise.resolve('Another Success'),
+]).then(res => console.log(res));
+
+// Promise.any [ES2021]
+// 返回最快的结果 但是会忽略错误
+Promise.any([
+  Promise.resolve('Success'),
+  Promise.reject('Error'),
+  Promise.resolve('Another Success'),
+]).then(res => console.log(res));
