@@ -477,20 +477,30 @@ const whereAmI = async function (country) {
     );
     const data = await res.json();
     renderCountry(data[0]);
+
+    return `You are in ${dataGeo.city},${dataGeo.country}`;
   } catch (err) {
     console.error(err);
+
+    throw err;
   }
 };
 
-whereAmI();
-whereAmI();
-whereAmI();
-console.log('FIRST');
+console.log('1: Will get location');
+// const resultCity = whereAmI();
+// console.log(resultCity);
 
-// try {
-//   let y = 1;
-//   const x = 2;
-//   x = 3;
-// } catch (err) {
-//   alert(err.message);
-// }
+// whereAmI()
+//   .then(city => console.log(`2: ${city}`))
+//   .catch(err => console.error(`2: ${err.message}`))
+//   .finally(() => console.log('3: Finished getting location'));
+
+(async function () {
+  try {
+    const city = await whereAmI();
+    console.log(`2: ${city}`);
+  } catch (err) {
+    console.error(`2: ${err.message}`);
+  }
+  console.log('3: Finished getting location');
+})();
