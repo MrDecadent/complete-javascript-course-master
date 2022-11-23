@@ -2,6 +2,7 @@
 // Importing module
 // import { addToCart, totalPrice as price, tq } from './shoppingCart.js';
 
+/*
 console.log('Importing module');
 
 // addToCart('bread', 5);
@@ -38,6 +39,39 @@ const lastPost = getLastPost();
 console.log(lastPost);
 
 // lastPost.then(last => console.log(last));
-
+// 在domule中 即使不在async function也能使用await
+// 但是导入module的脚本需要在module所有执行完成后才能接着执行，包括async await
 const lastPost2 = await getLastPost();
 console.log(lastPost2);
+*/
+
+const ShoppingCart2 = (function () {
+  const cart = [];
+  const shoppingCost = 10;
+  const totalPrice = 237;
+  const totalQuantity = 23;
+
+  const addToCart = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(
+      `${quantity} ${product} added to cart (sipping cost is ${shoppingCost})`
+    );
+  };
+
+  const orderStock = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(`${quantity} ${product} ordered from supplier`);
+  };
+
+  return {
+    addToCart,
+    cart,
+    totalPrice,
+    totalQuantity,
+  };
+})();
+
+ShoppingCart2.addToCart('apple', 4);
+ShoppingCart2.addToCart('pizza', 2);
+// ShoppingCart2中只有函数return出来的属性与方法 没有return的相当于私有
+console.log(ShoppingCart2);
