@@ -45,6 +45,7 @@ const lastPost2 = await getLastPost();
 console.log(lastPost2);
 */
 
+/*
 const ShoppingCart2 = (function () {
   const cart = [];
   const shoppingCost = 10;
@@ -75,3 +76,19 @@ ShoppingCart2.addToCart('apple', 4);
 ShoppingCart2.addToCart('pizza', 2);
 // ShoppingCart2中只有函数return出来的属性与方法 没有return的相当于私有
 console.log(ShoppingCart2);
+*/
+
+/*
+// CommonJS npm用的多的模块系统
+// Export
+export.addToCart =  function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(
+      `${quantity} ${product} added to cart (sipping cost is ${shoppingCost})`
+    );
+  };
+};
+
+// Import
+const { addToCart } = require('./shoppingCart.js');
+*/
