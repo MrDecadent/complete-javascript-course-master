@@ -92,3 +92,22 @@ export.addToCart =  function (product, quantity) {
 // Import
 const { addToCart } = require('./shoppingCart.js');
 */
+
+import cloneDeep from '../node_modules/lodash-es/cloneDeep.js';
+
+const state = {
+  cart: [
+    { product: 'breed', quantity: 5 },
+    { product: 'pizza', quantity: 5 },
+  ],
+  user: { loggedIn: true },
+};
+const stateClone = Object.assign({}, state);
+
+console.log(stateClone);
+
+const stateDeepClone = cloneDeep(state);
+console.log(stateDeepClone);
+
+// 克隆会跟随原变量
+state.user.loggedIn = false;
