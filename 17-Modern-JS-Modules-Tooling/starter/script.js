@@ -2,7 +2,6 @@
 // Importing module
 // import { addToCart, totalPrice as price, tq } from './shoppingCart.js';
 
-/*
 console.log('Importing module');
 
 // addToCart('bread', 5);
@@ -41,9 +40,8 @@ console.log(lastPost);
 // lastPost.then(last => console.log(last));
 // 在domule中 即使不在async function也能使用await
 // 但是导入module的脚本需要在module所有执行完成后才能接着执行，包括async await
-const lastPost2 = await getLastPost();
-console.log(lastPost2);
-*/
+// const lastPost2 = await getLastPost();
+// console.log(lastPost2);
 
 /*
 const ShoppingCart2 = (function () {
@@ -93,7 +91,8 @@ export.addToCart =  function (product, quantity) {
 const { addToCart } = require('./shoppingCart.js');
 */
 
-import cloneDeep from '../node_modules/lodash-es/cloneDeep.js';
+// import cloneDeep from '../node_modules/lodash-es/cloneDeep.js';
+import cloneDeep from 'lodash-es';
 
 const state = {
   cart: [
@@ -111,3 +110,8 @@ console.log(stateDeepClone);
 
 // 克隆会跟随原变量
 state.user.loggedIn = false;
+
+// 改变东西的时候页面不会重载
+if (module.hot) {
+  module.hot.accept();
+}
