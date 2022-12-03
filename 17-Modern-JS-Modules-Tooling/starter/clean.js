@@ -1,3 +1,5 @@
+'strict mode';
+
 const budget = [
   { value: 250, description: 'Sold old TV 📺', user: 'jonas' },
   { value: -45, description: 'Groceries 🥑', user: 'jonas' },
@@ -9,16 +11,23 @@ const budget = [
   { value: -1800, description: 'New Laptop 💻', user: 'jonas' },
 ];
 
-const spendingLimits = {
+// freeze 冻结对象 无法添加新的元素
+const spendingLimits = Object.freeze({
   jonas: 1500,
   matilda: 100,
-};
+});
 
-const getLimist = user => spendingLimits?.[user] ?? 0;
+const getLimist = (limits, user) => limits?.[user] ?? 0;
 
-const addExpense = function (value, description, user = 'jonas') {
+const addExpense = function (
+  state,
+  limits,
+  value,
+  description,
+  user = 'jonas'
+) {
   // if (!user) user = 'jonas';
-  user = user.toLowerCase();
+  const cleanUser = user.toLowerCase();
 
   // 2.1 Origin Code
   // let lim;
@@ -35,38 +44,51 @@ const addExpense = function (value, description, user = 'jonas') {
   // const limit = spendingLimits?.[user] ?? 0;
 
   // 2.4 使用函数
-  const limit = getLimist(user);
+  const limit = getLimist(limits, cleanUser);
 
   if (value <= limit) {
     // 3.1 Origin Code
     // budget.push({ value: -value, description: description, user: user });
     // 3.2 变量名与参数名一致情况下可以省略
-    budget.push({ value: -value, description, user });
+    // budget.push({ value: -value, description, user: cleanUser });
+
+    return [...state, { value: -value, description, user: cleanUser }];
   }
+  return state;
 };
-addExpense(10, 'Pizza 🍕');
-addExpense(100, 'Going to movies 🍿', 'Matilda');
-addExpense(200, 'Stuff', 'Jay');
+const newBudget1 = addExpense(budget, spendingLimits, 10, 'Pizza 🍕');
+const newBudget2 = addExpense(
+  newBudget1,
+  spendingLimits,
+  100,
+  'Going to movies 🍿',
+  'Matilda'
+);
+const newBudget3 = addExpense(newBudget2, spendingLimits, 200, 'Stuff', 'Jay');
 
-const checkExpense = function () {
-  for (const entry of budget) {
-    // let lim;
-    // if (spendingLimits[entry.user]) {
-    //   lim = spendingLimits[entry.user];
-    // } else {
-    //   lim = 0;
-    // }
+const checkExpense = function (state, limits) {
+  return state.map(entry => {
+    const limit = getLimist(limits, entry.user);
+    return entry.value < -limit ? { ...entry, flag: 'limit' } : entry;
+  });
+  // for (const entry of newBudget3) {
+  //   // let lim;
+  //   // if (spendingLimits[entry.user]) {
+  //   //   lim = spendingLimits[entry.user];
+  //   // } else {
+  //   //   lim = 0;
+  //   // }
 
-    const limit = getLimist(entry.user);
+  //   const limit = getLimist(limits, entry.user);
 
-    if (entry.value < -limit) {
-      entry.flag = 'limit';
-    }
-  }
+  //   if (entry.value < -limit) {
+  //     entry.flag = 'limit';
+  //   }
+  // }
 };
-checkExpense();
+const finalBudget = checkExpense(newBudget3, spendingLimits);
 
-console.log(budget);
+console.log(finalBudget);
 
 const logBigExpenses = function (limit) {
   let output = '';
